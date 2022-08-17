@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Net;
 
 namespace MyEBookReader
 {

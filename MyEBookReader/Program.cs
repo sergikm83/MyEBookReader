@@ -12,7 +12,9 @@ namespace MyEBookReader
         private static string theEBook;
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            GetBook();
+            Console.WriteLine("Downloading book");
+            Console.ReadLine();
         }
         static void GetBook()
         {
@@ -27,7 +29,7 @@ namespace MyEBookReader
             // Может понадобиться двукратное выполнение этого кода, если ранее вы
             // не посещали данный сайт, поскольку при первом его посещении появляется
             // окно с сообщением, предотвращающее нормальное выполнение кода.
-            wc.DownloadStringAsync(new Uri("http://www.gutenberg.org/files/98/98-8.txt"));
+            wc.DownloadStringAsync(new Uri("http://www.gutenberg.org/files/98/98-0.txt"));
         }
         static void GetStats()
         {
@@ -44,7 +46,7 @@ namespace MyEBookReader
             StringBuilder bookStats = new StringBuilder("Ten Most Common Words are:\n");
             foreach (string s in tenMostCommon)
             {
-                bookStats.Append(s);
+                bookStats.AppendLine(s);
             }
             // Самое длинное слово.
             bookStats.AppendFormat("Longest word is: {0}", longestWord);
@@ -52,7 +54,7 @@ namespace MyEBookReader
             // Информация о книге.
             Console.WriteLine(bookStats.ToString(),"Book info");
         }
-        private string[] FindTenMostCommon(string[] words)
+        private static string[] FindTenMostCommon(string[] words)
         {
             var frequencyOrder = from word in words
                                  where word.Length > 6
@@ -62,7 +64,7 @@ namespace MyEBookReader
             string[] commonWords = (frequencyOrder.Take(10)).ToArray();
             return commonWords;
         }
-        private string FindLongestWord(string[] words)
+        private static string FindLongestWord(string[] words)
         {
             return (from w in words orderby w.Length descending select w).FirstOrDefault();
         }

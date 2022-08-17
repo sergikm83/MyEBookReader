@@ -62,5 +62,9 @@ namespace MyEBookReader
             string[] commonWords = (frequencyOrder.Take(10)).ToArray();
             return commonWords;
         }
+        private string FindLongestWord(string[] words)
+        {
+            return (from w in words orderby w.Length descending select w).FirstOrDefault();
+        }
     }
 }

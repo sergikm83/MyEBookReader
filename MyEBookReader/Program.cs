@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Net;
 using System.Text;
+using System.Linq;
 
 namespace MyEBookReader
 {
@@ -50,6 +51,16 @@ namespace MyEBookReader
             bookStats.AppendLine();
             // Информация о книге.
             Console.WriteLine(bookStats.ToString(),"Book info");
+        }
+        private string[] FindTenMostCommon(string[] words)
+        {
+            var frequencyOrder = from word in words
+                                 where word.Length > 6
+                                 group word by word into g
+                                 orderby g.Count() descending
+                                 select g.Key;
+            string[] commonWords = (frequencyOrder.Take(10)).ToArray();
+            return commonWords;
         }
     }
 }

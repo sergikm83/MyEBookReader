@@ -37,11 +37,22 @@ namespace MyEBookReader
             string[] words = theEBook.Split(new char[]
             { ' ', '\u000A', ',', '.', ';', ':', '-', '?', '/' },
             StringSplitOptions.RemoveEmptyEntries);
-            // Найти 10 наиболее часто встречающихся слов.
-            string[] tenMostCommon = FindTenMostCommon(words);
-            // Получить самое длинное слово.
-            string longestWord = FindLongestWord(words);
-            // Когджа все задачи завершены, построить строку,
+            
+            string[] tenMostCommon = null;
+            string longestWord = string.Empty;
+            Parallel.Invoke(
+                () =>
+                {
+                    // Найти 10 наиболее часто встречающихся слов.
+                    tenMostCommon = FindTenMostCommon(words);
+                },
+                () =>
+                {
+                    // Получить самое длинное слово.
+                    longestWord = FindLongestWord(words);
+                });
+            
+            // Когда все задачи завершены, построить строку,
             // показывающую всю статистику в окне сообщений.
             StringBuilder bookStats = new StringBuilder("Ten Most Common Words are:\n");
             foreach (string s in tenMostCommon)
